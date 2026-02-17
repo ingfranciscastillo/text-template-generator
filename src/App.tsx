@@ -19,6 +19,8 @@ import { Preview, CopyButton } from "@/components/Preview";
 import { ImportExport } from "@/components/ImportExport";
 import { Input } from "@/components/ui/input";
 import "./App.css";
+import { ModeToggle } from "./components/mode-toggle";
+import { GithubIcon } from "./components/ui/github";
 
 function App() {
   const [templates, setTemplates] = React.useState<TemplateItem[]>([]);
@@ -172,8 +174,11 @@ function App() {
             Generador de Plantillas
           </h1>
         </div>
-        <div className="text-sm text-muted-foreground">
-          {templates.length} plantilla(s)
+        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <ModeToggle />
+          <a href="https://github.com/ingfranciscastillo/" aria-label="github">
+            <GithubIcon size={20} />
+          </a>
         </div>
       </header>
 
