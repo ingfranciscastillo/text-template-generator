@@ -1,6 +1,3 @@
-/* Estilos adicionales para el Generador de Plantillas */
-
-/* Asegurar que el textarea tenga scroll apropiado */
 textarea {
   scrollbar-width: thin;
   scrollbar-color: var(--muted-foreground) transparent;
@@ -20,7 +17,6 @@ textarea::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
 
-/* Scrollbar para la lista de plantillas */
 .overflow-auto {
   scrollbar-width: thin;
   scrollbar-color: var(--muted-foreground) transparent;
@@ -43,7 +39,6 @@ textarea::-webkit-scrollbar-thumb {
   background-color: var(--muted-foreground);
 }
 
-/* Animación suave para feedback */
 @keyframes fade-in {
   from {
     opacity: 0;

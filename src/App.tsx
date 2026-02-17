@@ -7,7 +7,11 @@ import {
   createEmptyTemplate,
   duplicateTemplate,
 } from "@/lib/storage";
-import { extractVariables, renderTemplate, syncValues } from "@/lib/templateEngine";
+import {
+  extractVariables,
+  renderTemplate,
+  syncValues,
+} from "@/lib/templateEngine";
 import { TemplateList } from "@/components/TemplateList";
 import { TemplateEditor } from "@/components/TemplateEditor";
 import { VariablesForm } from "@/components/VariablesForm";
@@ -17,64 +21,49 @@ import { Input } from "@/components/ui/input";
 import "./App.css";
 
 function App() {
-  // Estado de plantillas
   const [templates, setTemplates] = React.useState<TemplateItem[]>([]);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
-  
-  // Estado del editor
   const [content, setContent] = React.useState("");
   const [name, setName] = React.useState("");
   const [values, setValues] = React.useState<Record<string, string>>({});
-  const [placeholderStyle, setPlaceholderStyle] = React.useState<PlaceholderStyle>("brackets");
-  
-  // Cargar plantillas al inicio
+  const [placeholderStyle, setPlaceholderStyle] =
+    React.useState<PlaceholderStyle>("brackets");
   React.useEffect(() => {
     const loaded = loadTemplates();
     setTemplates(loaded);
-    
-    // Seleccionar la primera si existe
+
     if (loaded.length > 0) {
       setSelectedId(loaded[0].id);
       setContent(loaded[0].content);
       setName(loaded[0].name);
     }
   }, []);
-  
-  // Extraer variables del contenido actual
+
   const { vars: variables, invalid: invalidVars } = React.useMemo(
     () => extractVariables(content),
     [content]
   );
-  
-  // Sincronizar valores cuando cambian las variables
+
   React.useEffect(() => {
     setValues((prev) => syncValues(variables, prev));
   }, [variables.join(",")]); // eslint-disable-line react-hooks/exhaustive-deps
-  
-  // Renderizar preview
+
   const renderedContent = React.useMemo(
     () => renderTemplate(content, values, { placeholderStyle }),
     [content, values, placeholderStyle]
   );
-  
-  // Autosave con debounce
-  const debouncedSave = useDebounceCallback(
-    (newTemplates: TemplateItem[]) => {
-      saveTemplates(newTemplates);
-    },
-    500
-  );
-  
-  // Actualizar plantilla actual
+
+  const debouncedSave = useDebounceCallback((newTemplates: TemplateItem[]) => {
+    saveTemplates(newTemplates);
+  }, 500);
+
   const updateCurrentTemplate = React.useCallback(
     (updates: Partial<TemplateItem>) => {
       if (!selectedId) return;
-      
+
       setTemplates((prev) => {
         const updated = prev.map((t) =>
-          t.id === selectedId
-            ? { ...t, ...updates, updatedAt: Date.now() }
-            : t
+          t.id === selectedId ? { ...t, ...updates, updatedAt: Date.now() } : t
         );
         debouncedSave(updated);
         return updated;
@@ -82,18 +71,18 @@ function App() {
     },
     [selectedId, debouncedSave]
   );
-  
+
   // Handlers
   const handleContentChange = (newContent: string) => {
     setContent(newContent);
     updateCurrentTemplate({ content: newContent });
   };
-  
+
   const handleNameChange = (newName: string) => {
     setName(newName);
     updateCurrentTemplate({ name: newName });
   };
-  
+
   const handleSelectTemplate = (template: TemplateItem) => {
     setSelectedId(template.id);
     setContent(template.content);
@@ -102,7 +91,7 @@ function App() {
     const { vars } = extractVariables(template.content);
     setValues(syncValues(vars, {}));
   };
-  
+
   const handleCreateTemplate = () => {
     const newTemplate = createEmptyTemplate();
     setTemplates((prev) => {
@@ -115,12 +104,12 @@ function App() {
     setName(newTemplate.name);
     setValues({});
   };
-  
+
   const handleDeleteTemplate = (id: string) => {
     setTemplates((prev) => {
       const updated = prev.filter((t) => t.id !== id);
       saveTemplates(updated);
-      
+
       // Si eliminamos la seleccionada, seleccionar otra
       if (id === selectedId) {
         if (updated.length > 0) {
@@ -133,11 +122,11 @@ function App() {
           setName("");
         }
       }
-      
+
       return updated;
     });
   };
-  
+
   const handleDuplicateTemplate = (template: TemplateItem) => {
     const duplicated = duplicateTemplate(template);
     setTemplates((prev) => {
@@ -149,7 +138,7 @@ function App() {
     setContent(duplicated.content);
     setName(duplicated.name);
   };
-  
+
   const handleRenameTemplate = (id: string, newName: string) => {
     setTemplates((prev) => {
       const updated = prev.map((t) =>
@@ -158,12 +147,12 @@ function App() {
       saveTemplates(updated);
       return updated;
     });
-    
+
     if (id === selectedId) {
       setName(newName);
     }
   };
-  
+
   const handleImportTemplates = (imported: TemplateItem[]) => {
     setTemplates((prev) => {
       const updated = [...imported, ...prev];
@@ -171,9 +160,9 @@ function App() {
       return updated;
     });
   };
-  
+
   const selectedTemplate = templates.find((t) => t.id === selectedId);
-  
+
   return (
     <div className="h-screen flex flex-col bg-background">
       {/* Header */}
@@ -187,7 +176,7 @@ function App() {
           {templates.length} plantilla(s)
         </div>
       </header>
-      
+
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar - Template List */}
@@ -202,7 +191,7 @@ function App() {
             onRename={handleRenameTemplate}
           />
         </aside>
-        
+
         {/* Center - Editor */}
         <main className="flex-1 flex flex-col min-w-0">
           {selectedTemplate ? (
@@ -217,14 +206,14 @@ function App() {
                     className="text-lg font-medium border-0 px-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
                   />
                 </div>
-                
+
                 {/* Template Editor */}
                 <TemplateEditor
                   content={content}
                   onChange={handleContentChange}
                   invalidVars={invalidVars}
                 />
-                
+
                 {/* Variables Form */}
                 <VariablesForm
                   variables={variables}
@@ -236,7 +225,9 @@ function App() {
           ) : (
             <div className="flex-1 flex items-center justify-center text-muted-foreground">
               <div className="text-center">
-                <p className="mb-2">Selecciona una plantilla o crea una nueva</p>
+                <p className="mb-2">
+                  Selecciona una plantilla o crea una nueva
+                </p>
                 <button
                   onClick={handleCreateTemplate}
                   className="text-primary hover:underline"
@@ -247,7 +238,7 @@ function App() {
             </div>
           )}
         </main>
-        
+
         {/* Right Panel - Preview */}
         <aside className="w-80 border-l border-border bg-card p-4 overflow-auto">
           <div className="space-y-6">
@@ -256,9 +247,9 @@ function App() {
               placeholderStyle={placeholderStyle}
               onPlaceholderStyleChange={setPlaceholderStyle}
             />
-            
+
             <CopyButton text={renderedContent} />
-            
+
             <div className="border-t border-border pt-4">
               <ImportExport
                 templates={templates}
