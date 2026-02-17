@@ -1,73 +1,119 @@
-# React + TypeScript + Vite
+# Text Template Generator | Generador de Plantillas de Texto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A powerful text template generator with dynamic variables, real-time preview, and local template management.
 
-Currently, two official plugins are available:
+Un potente generador de plantillas de texto con variables dinámicas, preview en tiempo real y gestión de plantillas local.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features | Características
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**English:**
 
-## Expanding the ESLint configuration
+- 📝 **Intuitive template editor** - Write templates with `{{name}}`, `{{date}}` variables
+- ⚡ **Live rendering** - See the final result as you type
+- 🎯 **Automatic detection** - Variables are extracted automatically from templates
+- 💾 **Local persistence** - Save templates to localStorage
+- 🔄 **Import/Export JSON** - Share or backup your templates easily
+- 📋 **Copy to clipboard** - One click to copy the result
+- 🗑️ **Full CRUD** - Create, edit, rename, and delete templates
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Español:**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- 📝 **Editor de plantillas intuitivo** - Escribe plantillas con variables `{{nombre}}`, `{{fecha}}`
+- ⚡ **Renderizado en vivo** - Visualiza el resultado final mientras escribes
+- 🎯 **Detección automática** - Extrae variables automáticamente de la plantilla
+- 💾 **Persistencia local** - Guarda plantillas en localStorage
+- 🔄 **Import/Export JSON** - Comparte o respalda tus plantillas fácilmente
+- 📋 **Copiar al portapapeles** - Un click para copiar el resultado
+- 🗑️ **CRUD completo** - Crea, edita, renombra y elimina plantillas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Demo | Demostración
+
+Open the project in your browser and start creating templates instantly.  
+Abre el proyecto en tu navegador y empieza a crear plantillas al instante.
+
+---
+
+## Installation | Instalación
+
+```bash
+# Clone the repository | Clonar el repositorio
+git clone https://github.com/tu-usuario/text-template-generator.git
+cd text-template-generator
+
+# Install dependencies | Instalar dependencias
+npm install
+
+# Start development server | Iniciar servidor de desarrollo
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Usage | Uso
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### English
+
+1. **Create a template** with variables using the `{{variable}}` format
+2. **Variables are automatically detected** and appear as input fields
+3. **Fill in the fields** and the result is generated in real-time
+4. **Copy the result** with a single click
+
+### Español
+
+1. **Crea una plantilla** con variables usando el formato `{{variable}}`
+2. **Las variables se detectan automáticamente** y aparecen como campos de entrada
+3. **Completa los campos** y el resultado se genera en tiempo real
+4. **Copia el resultado** con un solo click
+
+**Example | Ejemplo:**
+
 ```
+Hello {{name}},
+
+Thank you for your purchase of {{product}} for ${{price}}.
+
+Estimated delivery date: {{delivery_date}}
+
+Best regards,
+{{company}}
+```
+
+---
+
+## Tech Stack | Tecnologías
+
+- [React 19](https://react.dev/) - UI library
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Vite](https://vitejs.dev/) - Build tool
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Vitest](https://vitest.dev/) - Testing
+
+---
+
+## Available Scripts | Scripts Disponibles
+
+```bash
+npm run dev      # Start dev server / Iniciar servidor de desarrollo
+npm run build    # Build for production / Compilar para producción
+npm run preview  # Preview production build / Previsualizar build
+npm run test     # Run tests / Ejecutar tests
+npm run lint     # Run ESLint / Ejecutar ESLint
+```
+
+---
+
+## Supported Variable Types | Tipos de Variables Soportados
+
+- `{{name}}` - Simple variables / Variables simples
+- `{{full_name}}` - Snake_case variables / Variables con guiones bajos
+- `{{currentDate}}` - CamelCase variables / Variables camelCase
+
+---
+
+## License | Licencia
+
+[MIT](LICENSE)
